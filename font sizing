@@ -1,0 +1,16 @@
+#fonts of different sizes
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>font sizing</title>
+        <body>
+            <h1>This is the biggest font size(h1)</h1>
+            <h2>This is the second biggest font size(h2)</h2>
+            <h3>This is the third biggest font size(h3)</h3>
+            <h4>This is the fourth biggest font size(h4)</h4>
+            <h5>This is the fifth biggest font size(h5)</h5>    
+            <h6>This is the smallest font size(h6)</h6>
+            <p>This is a paragraph with the default font size.</p>
+        </body>
+    </head>
+</html>
