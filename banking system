@@ -1,0 +1,111 @@
+#banking system for depost and withdraw
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Banking System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .bank-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button.withdraw {
+      background-color: #f44336;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .balance {
+      margin-top: 20px;
+      font-size: 18px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="bank-container">
+    <h2>Banking System</h2>
+    <label for="amount">Enter Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount" />
+
+    <button onclick="deposit()">Deposit</button>
+    <button class="withdraw" onclick="withdraw()">Withdraw</button>
+
+    <div class="balance">
+      Current Balance: ₹<span id="balance">0</span>
+    </div>
+  </div>
+
+  <script>
+    let balance = 0;
+
+    function updateBalanceDisplay() {
+      document.getElementById("balance").textContent = balance;
+    }
+
+    function deposit() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid positive amount.");
+        return;
+      }
+      balance += amount;
+      updateBalanceDisplay();
+      document.getElementById("amount").value = "";
+    }
+
+    function withdraw() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid positive amount.");
+        return;
+      }
+      if (amount > balance) {
+        alert("Insufficient balance!");
+        return;
+      }
+      balance -= amount;
+      updateBalanceDisplay();
+      document.getElementById("amount").value = "";
+    }
+  </script>
+</body>
+</html>
