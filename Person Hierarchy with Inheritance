@@ -1,0 +1,60 @@
+// Base class: Person
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  describe() {
+    return `${this.name} is ${this.age} years old.`;
+  }
+}
+
+// Subclass: Student
+class Student extends Person {
+  constructor(name, age, grade) {
+    super(name, age); // Call Person constructor
+    this.grade = grade;
+  }
+
+  // Method override
+  describe() {
+    return `${this.name} is a student in grade ${this.grade}.`;
+  }
+}
+
+// Subclass: Teacher
+class Teacher extends Person {
+  constructor(name, age, subject) {
+    super(name, age);
+    this.subject = subject;
+  }
+
+  // Method override
+  describe() {
+    return `${this.name} is a teacher of ${this.subject}.`;
+  }
+}
+
+// ---- Polymorphism Demo ----
+const people = [
+  new Person('Alex', 40),
+  new Student('Bella', 16, 10),
+  new Teacher('Mr. Clark', 35, 'Math'),
+];
+
+// Call describe() on all — polymorphic behavior
+people.forEach(person => {
+  console.log(person.describe());
+});
+
+// ---- instanceof checks ----
+people.forEach(p => {
+  if (p instanceof Student) {
+    console.log(`${p.name} is a Student`);
+  } else if (p instanceof Teacher) {
+    console.log(`${p.name} is a Teacher`);
+  } else if (p instanceof Person) {
+    console.log(`${p.name} is just a Person`);
+  }
+});
