@@ -1,0 +1,134 @@
+import React, { useState } from 'react';
+import './App.css';
+
+function App() {
+  // ✅ Initial state
+  const [books, setBooks] = useState([
+    { id: 1, title: '1984', author: 'George Orwell' },
+    { id: 2, title: 'The Hobbit', author: 'J.R.R. Tolkien' },
+  ]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [newBook, setNewBook] = useState({ title: '', author: '' });
+  const [editingBook, setEditingBook] = useState(null);
+
+  // ✅ Add new book
+  const handleAddBook = (e) => {
+    e.preventDefault();
+    if (!newBook.title || !newBook.author) return;
+
+    const newEntry = {
+      id: Date.now(),
+      ...newBook,
+    };
+    setBooks([...books, newEntry]);
+    setNewBook({ title: '', author: '' });
+  };
+
+  // ✅ Delete book
+  const handleDelete = (id) => {
+    setBooks(books.filter((book) => book.id !== id));
+  };
+
+  // ✅ Start editing a book
+  const handleEdit = (book) => {
+    setEditingBook(book);
+  };
+
+  // ✅ Update book
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    setBooks(
+      books.map((book) =>
+        book.id === editingBook.id ? editingBook : book
+      )
+    );
+    setEditingBook(null);
+  };
+
+  // ✅ Search filter
+  const filteredBooks = books.filter((book) =>
+    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="App">
+      <h1>📚 Library Management</h1>
+
+      {/* 🔍 Search */}
+      <input
+        type="text"
+        placeholder="Search by title..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+
+      <hr />
+
+      {/* ➕ Add New Book */}
+      <h2>Add New Book</h2>
+      <form onSubmit={handleAddBook}>
+        <input
+          type="text"
+          placeholder="Title"
+          value={newBook.title}
+          onChange={(e) => setNewBook({ ...newBook, title: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Author"
+          value={newBook.author}
+          onChange={(e) => setNewBook({ ...newBook, author: e.target.value })}
+        />
+        <button type="submit">Add Book</button>
+      </form>
+
+      <hr />
+
+      {/* ✏️ Edit Book */}
+      {editingBook && (
+        <div>
+          <h2>Edit Book</h2>
+          <form onSubmit={handleUpdate}>
+            <input
+              type="text"
+              value={editingBook.title}
+              onChange={(e) =>
+                setEditingBook({ ...editingBook, title: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              value={editingBook.author}
+              onChange={(e) =>
+                setEditingBook({ ...editingBook, author: e.target.value })
+              }
+            />
+            <button type="submit">Update</button>
+            <button onClick={() => setEditingBook(null)}>Cancel</button>
+          </form>
+        </div>
+      )}
+
+      <hr />
+
+      {/* 📖 Book List */}
+      <h2>Book List</h2>
+      {filteredBooks.length === 0 ? (
+        <p>No books found.</p>
+      ) : (
+        <ul>
+          {filteredBooks.map((book) => (
+            <li key={book.id}>
+              <strong>{book.title}</strong> by {book.author}
+              <button onClick={() => handleEdit(book)}>Edit</button>
+              <button onClick={() => handleDelete(book.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default App;
